@@ -1,0 +1,6 @@
+1. npm install
+2. cp .env.example .env
+3. Add API keys in .env
+4. npm run db:generate
+5. npm run db:push
+6. npm run dev
