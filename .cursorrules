@@ -1,0 +1,20 @@
+# Multi-LLM Debate Arena Rules
+
+## Tech Stack
+- Next.js 14+ (App Router)
+- Tailwind CSS
+- Prisma (SQLite)
+- LLM APIs (OpenAI, Anthropic, Google, etc.)
+
+## Project Structure
+- `app/`: Next.js pages and API routes.
+- `components/`: React components.
+- `lib/`: Business logic, types, and utility functions.
+- `prisma/`: Database schema and migrations.
+- `scripts/`: Maintenance and evaluation scripts.
+
+## Coding Standards
+- Use TypeScript for all new code.
+- Follow Shadcn UI patterns for components.
+- Keep business logic in `lib/` and out of components where possible.
+- Use environment variables for all API keys and secrets.
