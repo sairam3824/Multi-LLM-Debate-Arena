@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum DebateStatus {
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum DebateSide {
+  A
+  B
+  TIE
+}
+
+model Debate {
+  id                 String       @id @default(cuid())
+  claim              String
+  rounds             Int
+  maxWordsPerTurn    Int
+  debaterAModelLabel String
+  debaterAModelSpec  String
+  debaterBModelLabel String
+  debaterBModelSpec  String
+  judgeModelLabel    String
+  judgeModelSpec     String
+  status             DebateStatus @default(RUNNING)
+  finalWinner        DebateSide?
+  finalSummary       String?
+  markdownTranscript String?
+  totalCoherenceA    Int          @default(0)
+  totalEvidenceA     Int          @default(0)
+  totalRhetoricA     Int          @default(0)
+  totalCoherenceB    Int          @default(0)
+  totalEvidenceB     Int          @default(0)
+  totalRhetoricB     Int          @default(0)
+  createdAt          DateTime     @default(now())
+  completedAt        DateTime?
+  roundsData         DebateRound[]
+}
+
+model DebateRound {
+  id                     String     @id @default(cuid())
+  debateId               String
+  debate                 Debate     @relation(fields: [debateId], references: [id], onDelete: Cascade)
+  roundNumber            Int
+  argumentA              String
+  argumentB              String
+  judgeNarrative         String
+  winner                 DebateSide
+  coherenceA             Int
+  evidenceA              Int
+  rhetoricA              Int
+  coherenceB             Int
+  evidenceB              Int
+  rhetoricB              Int
+  coherenceJustificationA String
+  evidenceJustificationA  String
+  rhetoricJustificationA  String
+  coherenceJustificationB String
+  evidenceJustificationB  String
+  rhetoricJustificationB  String
+  createdAt              DateTime   @default(now())
+
+  @@unique([debateId, roundNumber])
+}
